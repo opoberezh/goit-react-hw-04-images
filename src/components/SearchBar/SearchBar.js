@@ -3,59 +3,50 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Header, SearchForm, SearchFormButton, SearchFormInput } from "./SearchBar.styled";
-import { Component } from "react";
-
-export class  SearchBar extends Component{
-    state = {
-        query: '',
-    };
+import { useState } from "react";
 
 
-handleSubmit = evt => {
-    evt.preventDefault();
+export const  SearchBar = (props) =>{
+ const [query, setQuery] = useState('');
 
-    const newQuery = this.state.query.trim();
-    if (newQuery === '') {
-      toast(" Oops! Search query is empty!", {
-         icon: "🦄"});
-      return;
-    }else{
-      toast.success("We found some images for you!", {
-        icon: "🚀"}); 
-    }
-    this.props.onSubmit(newQuery);
-    this.setState({ query: '' });
-  };
+const  handleSubmit = evt => {
+  evt.preventDefault();
 
-  handleChange = evt => {
-    this.setState({query: evt.target.value})
-  };
-
-  render() {
-    const {query} = this.state;
-    return(
-            <Header>
-                <SearchForm onSubmit={this.handleSubmit}>
-                    <SearchFormButton type="submit">
-                        <FcSearch size={22}/>
-                    </SearchFormButton>
-
-                    <SearchFormInput
-                        type="text"
-                        value={query}
-                        autoComplete="off"
-                        autoFocus
-                        placeholder="Search images and photos"
-                        onChange={this.handleChange}
-                    />
-                </SearchForm>
-            </Header>
-        )
+  if (query.trim === '') {
+    toast(" Oops! Search query is empty!", {
+       icon: "🦄"});
+    return;
+  }else{
+    toast.success("We found some images for you!", {
+      icon: "🚀"}); 
   }
+  props.onSubmit(query);
+  setQuery('');
+}; 
 
+ const handleChange = evt => {
+  setQuery(evt.target.value)
+};
+  return(
+    <Header>
+        <SearchForm onSubmit={handleSubmit}>
+            <SearchFormButton type="submit">
+                <FcSearch size={22}/>
+            </SearchFormButton>
+
+            <SearchFormInput
+                type="text"
+                value={query}
+                autoComplete="off"
+                autoFocus
+                placeholder="Search images and photos"
+                onChange={handleChange}
+            />
+        </SearchForm>
+    </Header>
+)
 }
-   
-
+    
 
 
 
