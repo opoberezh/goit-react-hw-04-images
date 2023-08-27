@@ -13,14 +13,14 @@ import { Modal } from './Modal/Modal';
 
 
 export class App extends Component {
-//   state ={
-//     query: '',
-//     loading: false,
-//     page: 1,
-//     images: [],
-//     error: null,
-//     isLastPage: false,
-//   };
+  state ={
+    query: '',
+    loading: false,
+    page: 1,
+    images: [],
+    error: null,
+    isLastPage: false,
+  };
 
 
 
@@ -50,64 +50,64 @@ fetchImages = async () => {
 };
 
 
-// changeQuery = newQuery => {
-// this.setState({
-//   query:`${nanoid()}/${newQuery}`,
-//   images: [],
-//   page: 1,
-//   loading: false,
-//   isLastPage: false,
-// })
-// };
+changeQuery = newQuery => {
+this.setState({
+  query:`${nanoid()}/${newQuery}`,
+  images: [],
+  page: 1,
+  loading: false,
+  isLastPage: false,
+})
+};
 
 
-// componentDidUpdate(prevProps, prevState){
-//   const prevQuery = prevState.query;
-//   const newQuery =  this.state.query;
+componentDidUpdate(prevProps, prevState){
+  const prevQuery = prevState.query;
+  const newQuery =  this.state.query;
 
-//   const prevPage = prevState.page;
-//   const nextPage = this.state.page;
+  const prevPage = prevState.page;
+  const nextPage = this.state.page;
 
-//   if(prevQuery !== newQuery || prevPage !== nextPage){
+  if(prevQuery !== newQuery || prevPage !== nextPage){
   this.fetchImages()
 }
 };
 
 
-// handleLoadMore = () => {
-//   if (this.state.query.trim() !== ''){
-//     this.setState(prevState => ({ page: prevState.page + 1 }))
-//   } else {
-//     toast("🦄 Oops! Search query is empty!");
-//   }
+handleLoadMore = () => {
+  if (this.state.query.trim() !== ''){
+    this.setState(prevState => ({ page: prevState.page + 1 }))
+  } else {
+    toast("🦄 Oops! Search query is empty!");
+  }
   
-// };
+};
 
 
-//   render() {
-//     const { images, error, loading, isLastPage } = this.state;
+  render() {
+    const { images, error, loading, isLastPage } = this.state;
   
-//     return (
-//       <>
-//         <div>
-//           <SearchBar onSubmit={this.changeQuery} />
-//           {loading && <Loader />}
-//           {error && !loading && (
-//             toast.error("Something went wrong!", {
-//               icon: "😲"
-//             })
-//           )}
-//           <ImageGallery images={this.state.images} />
-//           {images.length > 0 && !loading && !isLastPage && (
-//             <LoadMoreButton onClick={this.handleLoadMore} />
-//           )}
-//           <Modal />
-//         </div>
-//         <ToastContainer position="top-right" autoClose={2000} />
-//       </>
-//     );
-//   }
-// };
+    return (
+      <>
+        <div>
+          <SearchBar onSubmit={this.changeQuery} />
+          {loading && <Loader />}
+          {error && !loading && (
+            toast.error("Something went wrong!", {
+              icon: "😲"
+            })
+          )}
+          <ImageGallery images={this.state.images} />
+          {images.length > 0 && !loading && !isLastPage && (
+            <LoadMoreButton onClick={this.handleLoadMore} />
+          )}
+          <Modal />
+        </div>
+        <ToastContainer position="top-right" autoClose={2000} />
+      </>
+    );
+  }
+};
  
 
   

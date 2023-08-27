@@ -2,7 +2,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { nanoid } from 'nanoid'
 
-import { Component } from 'react';
 import { getImages } from '../API/API';
 import { SearchBar } from './SearchBar/SearchBar';
 import { Loader } from './Loader/Loader';
@@ -19,7 +18,7 @@ export const App =() => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [images, setImages] = useState([]);
-  const [error, setErroe] = useState(null);
+  const [error, setError] = useState(null);
   const [isLastPage, setIsLastPage] = useState(false);
 
   const changeQuery = newQuery => {
@@ -30,17 +29,40 @@ export const App =() => {
     setIsLastPage(false);
   };
 
-  useEffect(() => {
-    
-  })
+  useEffect(()=>{
+    async function fetchImages  () {
+  const separatedQuery = query.split('/')[1];
+
+ 
+  try {
+    setLoading (true);
+    const {hits, totalHits} = await getImages({ query: separatedQuery , page});
+    setImages(prevState =>[...prevState, ...hits]);
+    setIsLastPage(prevState =>  prevState.length + hits.length >= totalHits);
+    setError(null); 
+   
+  } catch (error) {
+    console.log(error);
+    toast.error('Something went wrong!', {
+      icon: '🤯',
+    });
+  } finally {
+    setLoading(false);
+  }
+
+};
+ fetchImages();
+  }, [query, page])
+
   useEffect(() => {
     if(query === '')  return
-
+   
   }, [query, page]);
 
  const handleLoadMore = () => {
-    if (query.trim() !== ''){
+  if (query.trim() === '') {
      toast("🦄 Oops! Search query is empty!");
+     return;
     } 
     setQuery(prevState => prevState + 1);
     };
