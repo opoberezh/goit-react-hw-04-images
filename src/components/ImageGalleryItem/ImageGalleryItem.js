@@ -8,9 +8,7 @@ export const ImageGalleryItem =({ webformatURL, tags, largeImageURL })=>{
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
-    setIsModalOpen(({ isModalOpen }) => ({
-      isModalOpen: !isModalOpen,
-    }));
+    setIsModalOpen(prevIsModalOpen => !prevIsModalOpen);
   };
 
 

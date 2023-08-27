@@ -40,8 +40,7 @@
         onRequestClose={onClose}
         onAfterOpen={() => disableBodyScroll(document)}
         onAfterClose={() => enableBodyScroll(document)}
-      >
-        <img src={largeImageURL} alt={tags} />
+      ><img src={largeImageURL} alt={tags} />
       </ReactModal>
     );
   };
