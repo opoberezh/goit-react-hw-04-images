@@ -29,17 +29,21 @@ export const App =() => {
     setIsLastPage(false);
   };
 
-  useEffect(()=>{
+  useEffect(()=>{ 
+    if(query === '')  return
     async function fetchImages  () {
   const separatedQuery = query.split('/')[1];
-
+ 
  
   try {
-    setLoading (true);
+    setLoading (true); 
+   
     const {hits, totalHits} = await getImages({ query: separatedQuery , page});
     setImages(prevState =>[...prevState, ...hits]);
-    setIsLastPage(prevState =>  prevState.length + hits.length >= totalHits);
+    setIsLastPage(prevState =>prevState + hits >= totalHits); 
     setError(null); 
+
+   
    
   } catch (error) {
     console.log(error);
@@ -49,22 +53,20 @@ export const App =() => {
   } finally {
     setLoading(false);
   }
-
+   
+    
 };
- fetchImages();
+  fetchImages();
   }, [query, page])
 
-  useEffect(() => {
-    if(query === '')  return
-   
-  }, [query, page]);
+ 
 
  const handleLoadMore = () => {
   if (query.trim() === '') {
      toast("🦄 Oops! Search query is empty!");
      return;
     } 
-    setQuery(prevState => prevState + 1);
+    setPage(prevState => prevState + 1);
     };
     
  
@@ -83,6 +85,7 @@ export const App =() => {
           {images.length > 0 && !loading && !isLastPage && (
             <LoadMoreButton onClick={handleLoadMore} />
           )}
+          
           <Modal />
         </div>
         <ToastContainer position="top-right" autoClose={2000} />
